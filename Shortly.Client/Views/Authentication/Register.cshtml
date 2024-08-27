@@ -1,0 +1,98 @@
+﻿@model RegisterVM
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Register your account";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h4 class="form-header">Sign Up With Us!</h4>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+
+                @* Display validation summary for all errors *@
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                <form asp-controller="Authentication" asp-action="RegisterUser">
+                    <div class="form-group mb-3">
+                        <label for="fullName">User Name</label>
+                            <input asp-for="username" type="text" class="form-control" id="fullName" placeholder="Enter User Name" />
+                        <span asp-validation-for="username" class="text-danger"></span>
+                        @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="phonenumber">Phone Number</label>
+                        <input asp-for="phonenumber" type="text" class="form-control" id="phonenumber" placeholder="Enter your phone number" />
+                       @*  <span asp-validation-for="phonenumber" class="text-danger"></span> *@
+                        @Html.ValidationMessageFor(model => model.phonenumber, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="emailAddress">Email Address</label>
+                        <input asp-for="emailaddress" type="email" class="form-control" id="emailAddress" placeholder="Enter email address" />
+                        <span asp-validation-for="emailaddress" class="text-danger"></span>
+                        @Html.ValidationMessageFor(model => model.emailaddress, "", new { @class = "text-danger" })
+
+                        
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        <input asp-for="password" type="password" class="form-control" id="password" placeholder="Enter password" />
+                        <small id="passSm" class="form-text text-muted">We'll never share your password with anyone else</small>
+                        <span asp-validation-for="password" class="text-danger"></span>
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="confirmpassword">Confirm Password</label>
+                        <input asp-for="confirmpassword" type="password" class="form-control" id="confirmpassword" placeholder="Re-Enter password" />
+                        <span asp-validation-for="confirmpassword" class="text-danger"></span>
+                        @Html.ValidationMessageFor(model => model.confirmpassword, "", new { @class = "text-danger" })
+
+                    </div>
+                   <button type="submit" class="btn btn-outline-success mt-2 btn-register">
+                        Register
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+        <!--external signup-->
+        <div class="row-pt-2">
+            <div class="col-md-8 offset-md-2">
+                <h5>External Login</h5>
+                @if (Model.schemes.Count() == 0)
+                {
+                    <div> No external logins configured </div>
+
+                }
+                else
+                {
+                    <form asp-action="ExternalLogin">
+                        @foreach (var provider in Model.schemes)
+                        {
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    name="provider"
+                                    value="@provider.Name" ,
+                                    title="Login using @provider.Name">
+                                @provider.DisplayName
+                            </button>
+
+
+                        }
+                    </form>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

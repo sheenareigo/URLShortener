@@ -1,0 +1,69 @@
+﻿@model List<Shortly.Client.Data.ViewModels.GetUrlVM>
+@{
+
+    ViewData["Title"] = "All short links";
+}
+
+@if (TempData["RemoveSuccess"] != null)
+    {
+
+<div class="container">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+            <strong>Success </strong>@TempData["RemoveSuccess"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    </div>
+</div>
+
+    }
+
+<div class="container">
+    <a class="btn btn-outline-success"
+        asp-action="Index" asp-controller="Home">Add New</a>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                
+                <th scope="col"> Orignial Link </th>
+                <th scope="col"> Shortened Link </th>
+                <th scope="col"> No of clicks </th>
+                @if (User.IsInRole(Role.Admin))
+                {
+                    <th scope="col">User</th>
+                }
+                <th scope="col"> Options </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                   
+                <td>@item.OriginalLink</td>
+                    <td>@item.ShortLink</td>
+                    <td>@item.NoOfClicks</td>
+                    @if (User.IsInRole(Role.Admin))
+                    {
+                        <td>@(item.UserId != null ? item.UserVM.Name : "-")</td>
+                    }
+                    <td>
+                        <a class="btn btn-outline-danger" asp-action="Remove" asp-controller="Url" asp-route-id="@item.Id">
+                            Remove
+                        </a>
+
+                    @* <a class="btn btn-outline-danger" asp-action="Remove" asp-controller="Url" asp-route-userid="@item.UserId" asp-route-linkid="@item.Id">
+                        Remove with 2
+                    </a> *@
+                   @*  <a class="btn btn-outline-danger" href="/Url/Remove?linktoremove=@item.Id">
+                            Remove
+                    </a> *@
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Shortly URL Shortener</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Url" asp-action="Index">All Links</a>
+                    </li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Authentication" asp-action="Users">Users</a>
+                        </li>
+                    }
+
+                </ul>
+            }
+        </div>
+
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-outline-primary my-2 my-sm-0 btn-login" asp-controller="Authentication" asp-action="Login">Login</a>
+            <span id="spaceSpan"></span>
+            <a class="btn btn-outline-primary my-2 my-sm-0 btn-register" asp-controller="Authentication" asp-action="Register">Register</a>
+
+        }
+        else
+        {
+            <form asp-controller="Authentication" asp-action="Logout">
+                <button class="btn btn-outline-primary my-2 my-sm-0 btn-logout">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Log out
+                    <b>@User.Identity.Name</b>
+
+                </button>
+            </form>
+
+        }
+    </div>
+</nav>

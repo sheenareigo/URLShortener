@@ -1,0 +1,41 @@
+﻿@model Confirm2FA
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Confirm your account";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h4 class="form-header">Multifactor Authentication</h4>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form asp-controller="Authentication" asp-action="ConfirmTwoFactor">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="userId" hidden/>
+
+                    <div class="form-group mb-3">
+                        <label for="code">Verification code</label>
+                        <br/>
+                        <input type="text" asp-for="code" value="@Model.code" class="form-control" id="twofa" placeholder="Enter Verification Code" />
+                        <small id="emalSm" class="form-text text-muted">Do not share the code with anyone!</small>
+                        <span asp-validation-for="code" class="text-danger"></span>
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-outline-success mt-2 btn-login">
+                        Send Confirm Code
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

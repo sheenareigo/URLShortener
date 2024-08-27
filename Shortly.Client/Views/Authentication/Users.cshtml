@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Shortly.Data.Models.User>
+@{
+    ViewData["Title"] = "All Users";
+}
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-1 g-4">
+        @foreach (var item in Model)
+        {
+            var collapseId = "collapse" + item.Id; // Generate a unique ID for each user's collapse section
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <small class="text-muted">@item.Urls.Count link(s), @item.Urls.Sum(n => n.NoOfClicks) click(s)</small>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.UserName</h5>
+                        <p class="card-text">This user has @item.Urls.Count link(s) and a total of @item.Urls.Sum(n => n.NoOfClicks) click(s)</p>
+                        <p class="d-inline-flex gap-1">
+                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#@collapseId" role="button" aria-expanded="false" aria-controls="@collapseId">
+                                Show Details
+                            </a>
+                        </p>
+                        <div class="collapse" id="@collapseId">
+                            <div class="card card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Original Link</th>
+                                            <th>Short Link</th>
+                                            <th>No of Clicks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var urls in @item.Urls)
+                                        {
+                                            <tr>
+                                                <td>@urls.OriginalLink</td>
+                                                <td>@urls.ShortLink</td>
+                                                <td>@urls.NoOfClicks</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
