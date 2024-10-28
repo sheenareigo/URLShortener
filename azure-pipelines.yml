@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'MyComputer Agent'
+  vmImage: MyComputer Agent
 
 variables:
   solution: '**/*.sln'
